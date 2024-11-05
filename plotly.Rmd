@@ -1,0 +1,39 @@
+---
+title: "Interactive Plotly Presentation"
+author: "Aprameya Nayak"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    theme: 
+      bootswatch: darkly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE, message = FALSE, warning = FALSE)
+```
+## Introduction
+
+This project was created as part of the Developing Data Products course. It showcases an interactive plot created using Plotly in R Markdown, and the resulting webpage is hosted with a dark theme. The `mtcars` dataset includes various characteristics of cars, such as weight, MPG, and gear type. Below, we’ll explore the relationship between car weight and MPG by gear type. The plot shows car weight versus MPG with points color-coded by the number of gears (3, 4, or 5). 
+
+
+```{r, echo=FALSE, results='hide'}
+# Load required libraries
+library(plotly)
+library(ggplot2)
+library(dplyr)
+
+# Prepare the data
+mtcars <- mtcars %>%
+  mutate(gear = factor(gear, labels = c("3 gears", "4 gears", "5 gears")))
+
+# Create interactive plot with CSS styling
+p <- plot_ly(mtcars, x = ~wt, y = ~mpg, color = ~gear, type = "scatter", mode = "markers") %>%
+  layout(
+    title = "Car Weight vs. MPG by Gear Type",
+    xaxis = list(title = "Weight (1000 lbs)"),
+    yaxis = list(title = "Miles per Gallon (MPG)")
+  )
+```
+```{r, echo = FALSE}
+p
+```
